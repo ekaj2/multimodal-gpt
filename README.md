@@ -6,6 +6,8 @@
 1. PyWinCtl and pyautogui for screenshots of a specific window
 1. OpenAI Vision API to process the screenshot and answer your prompt
 
+![](images/screenshot1.png)
+
 ## Installation
 
 ```bash
