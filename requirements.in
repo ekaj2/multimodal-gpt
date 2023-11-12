@@ -1,0 +1,9 @@
+openai
+pyautogui
+requests
+# This only supports Windows!
+# pygetwindow
+PyWinCtl
+sounddevice
+numpy
+scipy
