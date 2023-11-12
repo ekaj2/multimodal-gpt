@@ -5,5 +5,6 @@ requests
 # pygetwindow
 PyWinCtl
 sounddevice
+soundfile
 numpy
 scipy

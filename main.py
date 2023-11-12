@@ -1,9 +1,9 @@
 from openai import OpenAI
 
 from screenshot import take_screenshot
-from whisper_command import listen
-from image_api import submit_image
+from stt import listen
 from tts import say
+from image_api import submit_image
 from settings import FILES_DIR
 
 client = OpenAI()
