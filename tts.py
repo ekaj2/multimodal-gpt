@@ -1,10 +1,9 @@
-from pathlib import Path
 import subprocess
 from openai import OpenAI
 
+from settings import FILES_DIR
+
 client = OpenAI()
-BASE_DIR = Path(__file__).parent
-FILES_DIR = BASE_DIR / "files"
 
 
 def say(text):

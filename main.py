@@ -1,13 +1,10 @@
-from pathlib import Path
 from openai import OpenAI
 
 from screenshot import take_screenshot
 from whisper_command import listen
 from image_api import submit_image
 from tts import say
-
-BASE_DIR = Path(__file__).parent
-FILES_DIR = BASE_DIR / "files"
+from settings import FILES_DIR
 
 client = OpenAI()
 
