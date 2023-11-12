@@ -39,6 +39,8 @@ def say(text):
     buffersize = 20
 
     # TODO: make this actually stream the file before it's finished writing
+    # This is largely borrowed from:
+    # https://python-sounddevice.readthedocs.io/en/0.4.6/examples.html#play-a-very-long-sound-file
     q = queue.Queue(maxsize=buffersize)
     event = threading.Event()
 
@@ -82,10 +84,8 @@ def say(text):
         exit('\nInterrupted by user')
     except queue.Full:
         print("queue full")
-        exit(1)
     except Exception as e:
-        print("Exception: ", e)
-        exit(1)
+        pass
 
 
 if __name__ == "__main__":
