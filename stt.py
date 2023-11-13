@@ -8,7 +8,28 @@ from settings import SILENCE_BREAK_SAMPLE_DURATION, SILENCE_BREAK_THRESHOLD, SIL
 client = OpenAI()
 
 
-def listen():
+def listen(minimum_length=1000):
+    """
+    Records audio from the default microphone until a period of silence is detected.
+
+    Args:
+        minimum_length (int, optional): The minimum length of audio (in
+                                        milliseconds) to record before
+                                        stopping. Defaults to 500.
+
+    Returns:
+        str: The transcribed text from the recorded audio.
+
+    Raises:
+        ValueError: If the minimum_length is less than or equal to 0.
+
+    Example:
+        >>> listen()
+        Listening...
+        ........Stopped
+        Processing audio to text: Hello, how are you?
+    """
+
     fs = 44100
     recording = []
     silence_samples = int(SILENCE_DURATION * fs)
@@ -16,11 +37,14 @@ def listen():
     stream = sd.InputStream(samplerate=fs, channels=1)
     print("Listening...")
     stream.start()
+    elapsed_recording_time = 0  # in ms
     while True:
         data = stream.read(silence_samples)[0]
+        elapsed_recording_time += silence_samples / fs * 1000
         recording.extend(data)
         volume_norm = np.linalg.norm(data) / np.sqrt(silence_samples)
-        if volume_norm < SILENCE_THRESHOLD:
+        if volume_norm < SILENCE_THRESHOLD and \
+                elapsed_recording_time > minimum_length:
             print("Stopped")
             break
         else:

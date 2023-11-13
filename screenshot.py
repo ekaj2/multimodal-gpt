@@ -53,7 +53,7 @@ def take_screenshot(output_path):
 
     say(input_str)
     while True:
-        transcript = listen()
+        transcript = listen(minimum_length=5000)
         num = word_to_num(transcript)
         if num is None:
             say("Please choose a number...")
