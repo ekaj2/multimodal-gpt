@@ -29,7 +29,7 @@ while True:
         try:
             content = gpt_result["choices"][0]["message"]["content"]
             print(content)
-            say(content)
+            say(content, confirm_before_speaking=True)
         except KeyError as e:
             print(e)
             print(gpt_result)

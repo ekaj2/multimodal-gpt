@@ -1,5 +1,4 @@
 import threading
-from time import sleep
 import os
 import sounddevice as sd
 import soundfile as sf
@@ -10,30 +9,41 @@ import threading
 from openai import OpenAI
 
 from settings import FILES_DIR
+from stt import wait_for_speech
 
 client = OpenAI()
-speech_file_path = FILES_DIR / "speech.flac"
+default_file_path = FILES_DIR / "speech.flac"
 
 
-def stream_audio_to_file(text):
+def stream_audio_to_file(text, speed, speech_file_path):
     response = client.audio.speech.create(
         model="tts-1",
         voice="alloy",
         input=text,
-        response_format="flac"
+        response_format="flac",
+        speed=speed
     )
     response.stream_to_file(speech_file_path)
 
 
-def say(text):
+def say(text, speed=1.0, confirm_before_speaking=False, speech_file_path=default_file_path):
+
     try:
         os.remove(speech_file_path)
     except FileNotFoundError:
         pass
     # Start streaming in a separate thread
-    t = threading.Thread(target=stream_audio_to_file, args=(text,))
+    t = threading.Thread(target=stream_audio_to_file,
+                         args=(text, speed, speech_file_path))
     t.start()
     t.join()
+
+    if confirm_before_speaking:
+        say(
+            "I found that information for you, let me know when you're ready to hear it.",
+            speech_file_path=FILES_DIR / "confirmation.flac"
+        )
+        wait_for_speech()
 
     blocksize = 128
     buffersize = 20

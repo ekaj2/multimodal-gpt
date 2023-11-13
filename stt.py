@@ -58,7 +58,7 @@ def listen(minimum_length=1000):
             file=audio_file,
             response_format="text"
         )
-        print(f"Processing image to answer: {command}")
+        print(f"Transcript: {command}")
     return command
 
 

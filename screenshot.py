@@ -48,7 +48,7 @@ def take_screenshot(output_path):
     input_str = "Please choose a window:\n"
     i = 1
     for title in [a.title for a in all_windows]:
-        input_str += f"{i}: {title}\n"
+        input_str += f"{i}. {title}\n"
         i += 1
 
     say(input_str)
@@ -56,7 +56,7 @@ def take_screenshot(output_path):
         transcript = listen(minimum_length=5000)
         num = word_to_num(transcript)
         if num is None:
-            say("Please choose a number...")
+            say("Please choose a number...", speed=0.5)
         else:
             break
 
